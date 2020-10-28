@@ -9,16 +9,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import com.google.api.core.ApiFuture;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 
 import modele.Mouton;
 
@@ -38,7 +42,7 @@ public class MoutonDAO {
 			
 			ApiFuture<QuerySnapshot> demande = base.collection("mouton").get();
 		    QuerySnapshot resultat = demande.get();
-			nombre = resultat.getDocuments().size();			
+			nombre = resultat.getDocuments().size();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,8 +80,21 @@ public class MoutonDAO {
 		return moutons;
 	}
 
-	public void ajouterMouton(Mouton mouton)
+	public void ajouterMouton(Mouton mouton) throws IOException
 	{
+		Firestore base = BaseDeDonnees.getInstance().getBase();
+		
+		try {
+			DocumentReference nouveau = base.collection("mouton").document();
+			Map<String, Object> objet = new HashMap<>();
+			objet.put("nom", mouton.getNom());
+			objet.put("couleur", mouton.getCouleur());
+			objet.put("poids", mouton.getPoids());
+			ApiFuture<WriteResult> resultat = nouveau.set(objet);
+			System.out.println("Update time : " + resultat.get().getUpdateTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Mouton detaillerMouton(int numero)
