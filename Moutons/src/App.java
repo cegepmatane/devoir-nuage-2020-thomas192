@@ -8,10 +8,10 @@ public class App {
 
 	public static void main(String[] parametres) throws IOException {
 		
-		MoutonDAO moutonDAO = new MoutonDAO();
-		Mouton mouton = new Mouton();
+		//MoutonDAO moutonDAO = new MoutonDAO();
+		//Mouton mouton = new Mouton();
 		
-		mouton = moutonDAO.trouverMoutonParNom("Mei");
+		//mouton = moutonDAO.trouverMoutonParNom("Mei");
 		
 		//mouton = moutonDAO.detaillerMouton("pxhmjtxry5wikb1bgfqY");
 		
@@ -20,8 +20,9 @@ public class App {
 		//mouton.setPoids(64);
 		//moutonDAO.ajouterMouton(mouton);
 		
-		System.out.println(mouton.getNom());
-		//Fenetre.launch(Fenetre.class, parametres);	
+		//System.out.println(mouton.getNom());
+		
+		Fenetre.launch(Fenetre.class, parametres);	
 	}
 
 }
