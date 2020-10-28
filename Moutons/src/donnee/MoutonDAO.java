@@ -98,6 +98,23 @@ public class MoutonDAO {
 		}
 	}
 	
+	/*
+	public void modifierMouton(Mouton mouton)
+	{
+		Firestore base = BaseDeDonnees.getInstance().getBase();
+		
+		try {			
+			Map<String, Object> objet = new HashMap<>();
+			objet.put("nom", mouton.getNom());
+			objet.put("couleur", mouton.getCouleur());
+			objet.put("poids", mouton.getPoids());
+			base.collection("mouton").document(mouton.getId()).set(objet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	*/
+	
 	public Mouton detaillerMouton(String id) throws IOException
 	{
 		Firestore base = BaseDeDonnees.getInstance().getBase();
