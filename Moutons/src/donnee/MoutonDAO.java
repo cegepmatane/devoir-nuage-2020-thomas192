@@ -29,12 +29,23 @@ public class MoutonDAO {
 	public static final String SQL_MODIFIER_MOUTON = "";
 	public static final String SQL_COMPTER_MOUTON = "SELECT COUNT(*) as nombre from mouton";
 	
-	public int compterMoutons()
-	{	
-		return 0;		
+	public int compterMoutons() throws IOException
+	{
+		Firestore base = BaseDeDonnees.getInstance().getBase();
+		
+		int nombre = 0;
+		try {
+			
+			ApiFuture<QuerySnapshot> demande = base.collection("mouton").get();
+		    QuerySnapshot resultat = demande.get();
+			nombre = resultat.getDocuments().size();			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nombre;		
 	}
 	
-	public List<Mouton> listerMoutons() throws InterruptedException, ExecutionException, IOException
+	public List<Mouton> listerMoutons() throws IOException
 	{
 		Firestore base = BaseDeDonnees.getInstance().getBase();
 		
