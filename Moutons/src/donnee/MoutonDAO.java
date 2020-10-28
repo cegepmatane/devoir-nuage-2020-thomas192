@@ -124,4 +124,30 @@ public class MoutonDAO {
 		return mouton;
 	}
 	
+	public Mouton trouverMoutonParNom(String nom) throws IOException
+	{
+		Firestore base = BaseDeDonnees.getInstance().getBase();
+		
+    	Mouton mouton = new Mouton();
+
+		try {
+		    ApiFuture<QuerySnapshot> demande = base.collection("mouton").whereEqualTo("nom", nom).get();
+		    QuerySnapshot resultat = demande.get();
+		    List<QueryDocumentSnapshot> moutonsNuage = resultat.getDocuments();
+		    QueryDocumentSnapshot moutonNuage = moutonsNuage.get(0);
+	    	//String id = moutonNuage.getId();
+	    	String couleur = moutonNuage.getString("couleur");
+	    	int poids = Math.toIntExact(moutonNuage.getLong("poids"));
+	    	
+	    	//mouton.setId(id);
+	    	mouton.setNom(nom);
+	    	mouton.setCouleur(couleur);
+	    	mouton.setPoids(poids);	    	
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mouton;
+	}
+	
 }

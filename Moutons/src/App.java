@@ -11,7 +11,9 @@ public class App {
 		MoutonDAO moutonDAO = new MoutonDAO();
 		Mouton mouton = new Mouton();
 		
-		mouton = moutonDAO.detaillerMouton("pxhmjtxry5wikb1bgfqY");
+		mouton = moutonDAO.trouverMoutonParNom("Mei");
+		
+		//mouton = moutonDAO.detaillerMouton("pxhmjtxry5wikb1bgfqY");
 		
 		//mouton.setNom("Birdy");
 		//mouton.setCouleur("Rose");
