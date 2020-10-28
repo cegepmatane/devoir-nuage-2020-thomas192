@@ -10,10 +10,14 @@ public class App {
 		
 		MoutonDAO moutonDAO = new MoutonDAO();
 		Mouton mouton = new Mouton();
-		mouton.setNom("Birdy");
-		mouton.setCouleur("Rose");
-		mouton.setPoids(64);
-		moutonDAO.ajouterMouton(mouton);
+		
+		mouton = moutonDAO.detaillerMouton("pxhmjtxry5wikb1bgfqY");
+		
+		//mouton.setNom("Birdy");
+		//mouton.setCouleur("Rose");
+		//mouton.setPoids(64);
+		//moutonDAO.ajouterMouton(mouton);
+		
 		System.out.println(mouton.getNom());
 		//Fenetre.launch(Fenetre.class, parametres);	
 	}

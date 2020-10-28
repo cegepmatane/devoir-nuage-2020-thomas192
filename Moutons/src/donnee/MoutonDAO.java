@@ -18,6 +18,7 @@ import com.google.api.core.ApiFuture;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.FieldPath;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
@@ -60,7 +61,7 @@ public class MoutonDAO {
 			QuerySnapshot resultat = demande.get();
 			List<QueryDocumentSnapshot> moutonsNuage = resultat.getDocuments();
 			for(QueryDocumentSnapshot moutonNuage : moutonsNuage) {
-				String id = moutonNuage.getId();
+				//String id = moutonNuage.getId();
 				String nom = moutonNuage.getString("nom");
 				String couleur = moutonNuage.getString("couleur");
 				int poids = Math.toIntExact(moutonNuage.getLong("poids"));
@@ -97,10 +98,29 @@ public class MoutonDAO {
 		}
 	}
 	
-	public Mouton detaillerMouton(int numero)
+	public Mouton detaillerMouton(String id) throws IOException
 	{
-		Mouton mouton =  new Mouton();			
+		Firestore base = BaseDeDonnees.getInstance().getBase();
 		
+		Mouton mouton =  new Mouton();	
+		
+		try {
+		    ApiFuture<QuerySnapshot> demande = base.collection("mouton").whereEqualTo(FieldPath.documentId(), id).get();
+		    QuerySnapshot resultat = demande.get();
+		    List<QueryDocumentSnapshot> moutonxNuage = resultat.getDocuments();
+		    QueryDocumentSnapshot moutonNuage = moutonxNuage.get(0);
+	    	String nom = moutonNuage.getString("nom");
+	    	String couleur = moutonNuage.getString("couleur");
+	    	int poids = Math.toIntExact(moutonNuage.getLong("poids"));
+	    	
+	    	//mouton.setId(id);
+	    	mouton.setNom(nom);
+	    	mouton.setCouleur(couleur);
+	    	mouton.setPoids(poids);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return mouton;
 	}
 	
